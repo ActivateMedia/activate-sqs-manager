@@ -1,0 +1,1 @@
+# activate-sqs-manager
