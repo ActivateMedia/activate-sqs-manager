@@ -1,7 +1,7 @@
 # activate-sqs-manager
 **activate-sqs-manager** is built on top of AWS-sdk to manage internal home production stuff.
 
-## Version 1.x Now Available
+## Version 2.x Now Available
 The version 3.x of the AWS SDK for JavaScript is generally available. For more information see the [API Reference](https://github.com/galgoketan/Activate-AWS-sdk/tree/develop).
 
 - **Prerequisite**
