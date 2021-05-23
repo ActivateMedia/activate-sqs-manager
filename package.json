@@ -1,5 +1,5 @@
 {
-  "name": "aws-sqs",
+  "name": "activate-sqs-manager",
   "version": "1.0.0",
   "description": "aws-sqs implementation",
   "main": "index.js",
