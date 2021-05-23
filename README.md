@@ -1,7 +1,7 @@
 # activate-sqs-manager
 **activate-sqs-manager** is built on top of AWS-sdk to manage internal home production stuff.
 
-## Version 2.x.x Now Available
+## Version 1.x.x Now Available
 The version 3.x of the AWS SDK for JavaScript is generally available. For more information see the [API Reference](https://github.com/galgoketan/Activate-AWS-sdk/tree/develop).
 
 - **Prerequisite**
@@ -22,16 +22,17 @@ Using npm:
 $ npm install git@github.com:ActivateMedia/activate-sqs-manager.git
 ```
 
-- **Configuring**
+## Configuring
 
 - **configuring sqs consumer**
 
 ```js
-const {Consumer} = require('aws-sqs');
+const {SqsManager} = require('activate-sqs-manager');
 
 // initializing sqs-consumer
-new Consumer({
+new SqsManager({
   queueUrl: 'queue_url',
+  type: 'consumer',
   messageHandler: function () {
     // attaching callback to listen messages from queue
   }
@@ -42,10 +43,11 @@ new Consumer({
 - **configuring sqs message**
 
 ```js
-const {Message} = require('aws-sqs');
+const {SqsManager} = require('activate-sqs-manager');
 
-const message = new Message({
-  queueUrl: 'https://region.amazonaws.com/key/queuename'
+const message = new SqsManager({
+  queueUrl: 'https://region.amazonaws.com/key/queuename',
+  type: 'message'
 });
 ```
 
@@ -87,8 +89,9 @@ const message = {
 
 // pushing it to queue
 
-const message = new Message({
-  queueUrl: 'https://region.amazonaws.com/key/queuename'
+const message = new SqsManager({
+  queueUrl: 'https://region.amazonaws.com/key/queuename',
+  type: 'message'
 });
 message.sendMessageToQueue(message);
 
@@ -138,7 +141,7 @@ There are some default constant that you can pass at the configuration time to o
 
 ```js
 // initializing sqs-consumer
-new Consumer({
+new SqsManager({
   queueUrl: 'https://region.amazonaws.com/key/queuename',
   batchSize: 2,
   pollingWaitTimeMs: 1000,
@@ -149,3 +152,26 @@ new Consumer({
   }
 });
 ```
+
+## Methods
+
+**Message queue** methods
+| Method | Result | Description |
+| ------ | ------ | ------ |
+| sendMessageToQueue | String | This method is used to insert single message to queue
+| sendBatchMessagesToQueue | String | This method is used to insert batch messages to queue
+| readMessageFromQueue | Object, String | This method is used to read messages from queue
+
+
+## Queue Properties
+
+**All the properties are String.**
+| Property | Status | Message | Consumer |Descripiton |
+| ------ | ------ | ------| ------| ------ |
+| queueUrl | required | &#9745; | &#9745; | queue url |
+| type | required | &#9745; | &#9745; |this indicates which type of queue instance you want to generate |
+| messageHandler | required | &#9744; | &#9745; | A callback that listen messages from consumer queue |
+| batchSize | required | &#9744; | &#9744; | The number of messages you want to push and retrieve to message and consumer respectively, This can't be greater than  10. |
+| region | required | &#9744; | &#9744; | aws queue region |
+| apiVersion | required | &#9744; | &#9744; | The api version you want to use |
+|  pollingWaitTimeMs | required | &#9744; | &#9744; | The duration (in milliseconds) to wait before repolling the queue and default is 500ms. |
